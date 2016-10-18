@@ -1,7 +1,7 @@
 ******************************************************************************
                   MSP430 Linker PC v15.12.3                    
 ******************************************************************************
->> Linked Tue Oct 18 22:19:54 2016
+>> Linked Wed Oct 19 00:20:53 2016
 
 OUTPUT FILE NAME:   <RTOS.out>
 ENTRY POINT SYMBOL: "_c_int00_noinit_noargs_noexit_mpu"  address: 00004400
@@ -19,7 +19,7 @@ MEMORY CONFIGURATION
   INFOB                 00001900   00000080  00000000  00000080  RWIX
   INFOA                 00001980   00000080  00000000  00000080  RWIX
   RAM                   00001c00   00000800  000000a0  00000760  RWIX
-  FRAM                  00004400   0000bb80  00000024  0000bb5c  RWIX
+  FRAM                  00004400   0000bb80  00000026  0000bb5a  RWIX
   JTAGSIGNATURE         0000ff80   00000004  00000004  00000000  RWIX  ffff 
   BSLSIGNATURE          0000ff84   00000004  00000004  00000000  RWIX  ffff 
   IPESIGNATURE          0000ff88   00000008  00000008  00000000  RWIX  ffff 
@@ -79,7 +79,7 @@ MEMORY CONFIGURATION
   INT53                 0000fffa   00000002  00000002  00000000  RWIX
   INT54                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FRAM2                 00010000   00014000  00000080  00013f80  RWIX
+  FRAM2                 00010000   00014000  00000082  00013f7e  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -124,6 +124,9 @@ section   page    origin      length       input sections
                   00004400    00000016     rts430x_lc_rd_eabi.lib : boot_special.obj (.text:_isr:_c_int00_noinit_noargs_noexit_mpu)
                   00004416    00000008                            : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
                   0000441e    00000006     timer_a.obj (.text:_isr:Tma_InterruptTimerA0)
+
+.const     0    00004424    00000002     
+                  00004424    00000002     timer_a.obj (.const)
 
 $fill000   0    0000ff80    00000004     
                   0000ff80    00000004     --HOLE-- [fill = ffff]
@@ -231,14 +234,14 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.obj (.reset)
 
-.text      0    00010000    00000080     
+.text      0    00010000    00000082     
                   00010000    00000028     MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib : mpu_init.o (.text:__mpu_init)
-                  00010028    0000001c     main.obj (.text:main)
-                  00010044    0000001a     timer_a.obj (.text:Tma_Init)
-                  0001005e    00000012     settings.obj (.text:Set_MspSetup)
-                  00010070    00000006     main.obj (.text:Mai__Init)
-                  00010076    00000006     rts430x_lc_rd_eabi.lib : exit.obj (.text:abort)
-                  0001007c    00000004                            : pre_init.obj (.text:_system_pre_init)
+                  00010028    0000001c     timer_a.obj (.text:Tma__TimerA0Setup)
+                  00010044    0000001c     main.obj (.text:main)
+                  00010060    00000012     settings.obj (.text:Set_MspSetup)
+                  00010072    00000006     main.obj (.text:Mai__Init)
+                  00010078    00000006     rts430x_lc_rd_eabi.lib : exit.obj (.text:abort)
+                  0001007e    00000004                            : pre_init.obj (.text:_system_pre_init)
 
 MODULE SUMMARY
 
@@ -255,9 +258,9 @@ MODULE SUMMARY
        Total:             18     0         0      
                                                   
     .\Modules\MOD_DRV__TIMERS\
-       timer_a.obj        32     2         0      
+       timer_a.obj        34     4         0      
     +--+------------------+------+---------+---------+
-       Total:             32     2         0      
+       Total:             34     4         0      
                                                   
     C:\ti\ccsv6\ccs_base\msp430\lib\FR59xx\MSPMPU_INIT_LIB_CCS_msp430_large_code_restricted_data.lib
        mpu_init.o         40     0         0      
@@ -302,7 +305,7 @@ MODULE SUMMARY
                                                   
        Stack:             0      0         160    
     +--+------------------+------+---------+---------+
-       Grand Total:       164    58        160    
+       Grand Total:       166    60        160    
 
 
 GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
@@ -566,7 +569,7 @@ address   name
 000009ce  AESAXIN_L                        
 000004be  BCD2BIN                          
 000004bc  BIN2BCD                          
-00010076  C$$EXIT                          
+00010078  C$$EXIT                          
 0000043e  CAPTIO0CTL                       
 0000043f  CAPTIO0CTL_H                     
 0000043e  CAPTIO0CTL_L                     
@@ -1483,7 +1486,7 @@ address   name
 0000019a  SYSUNIV                          
 0000019b  SYSUNIV_H                        
 0000019a  SYSUNIV_L                        
-0001005e  Set_MspSetup                     
+00010060  Set_MspSetup                     
 00000352  TA0CCR0                          
 00000354  TA0CCR1                          
 00000356  TA0CCR2                          
@@ -1544,7 +1547,7 @@ address   name
 000003e0  TB0EX0                           
 000003ee  TB0IV                            
 000003d0  TB0R                             
-00010044  Tma_Init                         
+00010028  Tma_Init                         
 0000441e  Tma_InterruptTimerA0             
 000005d0  UCA0ABCTL                        
 000005c6  UCA0BRW                          
@@ -1747,13 +1750,13 @@ ffffffff  __c_args__
 00004400  _c_int00_noinit_noargs_noexit_mpu
 0000fffe  _reset_vector                    
 00002360  _stack                           
-0001007c  _system_pre_init                 
-00010076  abort                            
+0001007e  _system_pre_init                 
+00010078  abort                            
 00004400  fram_ipe_end                     
 00004400  fram_ipe_start                   
 00004400  fram_rw_start                    
 00004400  fram_rx_start                    
-00010028  main                             
+00010044  main                             
 0000a501  mpu_ctl0_value                   
 00001513  mpu_sam_value                    
 00000440  mpu_segment_border1              
@@ -3203,12 +3206,12 @@ address   name
 0000fffc  __TI_int54                       
 0000fffe  _reset_vector                    
 00010000  __mpu_init                       
-00010028  main                             
-00010044  Tma_Init                         
-0001005e  Set_MspSetup                     
-00010076  C$$EXIT                          
-00010076  abort                            
-0001007c  _system_pre_init                 
+00010028  Tma_Init                         
+00010044  main                             
+00010060  Set_MspSetup                     
+00010078  C$$EXIT                          
+00010078  abort                            
+0001007e  _system_pre_init                 
 ffffffff  __TI_pprof_out_hndl              
 ffffffff  __TI_prof_data_size              
 ffffffff  __TI_prof_data_start             

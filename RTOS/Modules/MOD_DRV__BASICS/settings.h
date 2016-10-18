@@ -4,6 +4,7 @@
  *  Created on: Oct 18, 2016
  *      Author: MSC
  */
+#include <stdint.h>
 
 #ifndef MODULES_MOD_DRV__BASICS_SETTINGS_H_
 #define MODULES_MOD_DRV__BASICS_SETTINGS_H_
