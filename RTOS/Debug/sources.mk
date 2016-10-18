@@ -112,4 +112,6 @@ S64_DEPS__QUOTED :=
 # Every subdirectory with source files must be described here
 SUBDIRS := \
 . \
+Modules/MOD_DRV__BASICS \
+Modules/MOD_DRV__TIMERS \
 

@@ -11,8 +11,11 @@ GEN_CMDS__FLAG :=
 
 ORDERED_OBJS += \
 "./main.obj" \
+"./Modules/MOD_DRV__BASICS/settings.obj" \
+"./Modules/MOD_DRV__TIMERS/timer_a.obj" \
 "../lnk_msp430fr6989.cmd" \
 $(GEN_CMDS__FLAG) \
+-llibmpu_init.a \
 -llibmath.a \
 -llibc.a \
 
@@ -24,7 +27,11 @@ RMDIR := RMDIR /S/Q
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include Modules/MOD_DRV__BASICS/subdir_vars.mk
+-include Modules/MOD_DRV__TIMERS/subdir_vars.mk
 -include subdir_rules.mk
+-include Modules/MOD_DRV__BASICS/subdir_rules.mk
+-include Modules/MOD_DRV__TIMERS/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -140,7 +147,7 @@ all: RTOS.out
 RTOS.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MSP430 Linker'
-	"C:/ti/ccsv6/tools/compiler/msp430_15.12.3.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power=all --advice:hw_config=all -g --define=__MSP430FR6989__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"RTOS.map" --stack_size=160 --heap_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/msp430_15.12.3.LTS/lib" -i"C:/ti/ccsv6/tools/compiler/msp430_15.12.3.LTS/include" --priority --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="RTOS_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "RTOS.out" $(ORDERED_OBJS)
+	"C:/ti/ccsv6/tools/compiler/msp430_15.12.3.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power="all" --advice:hw_config=all -g --define=__MSP430FR6989__ --define=_MPU_ENABLE --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU40 --printf_support=minimal -z -m"RTOS.map" --stack_size=160 --heap_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv6/ccs_base/msp430/include" -i"C:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv6/ccs_base/msp430/lib/FR59xx" -i"C:/ti/ccsv6/tools/compiler/msp430_15.12.3.LTS/lib" -i"C:/ti/ccsv6/tools/compiler/msp430_15.12.3.LTS/include" --priority --reread_libs --define=_MPU_ENABLE --warn_sections --display_error_number --diag_wrap=off --xml_link_info="RTOS_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "RTOS.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -153,8 +160,8 @@ RTOS.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "main.d" 
-	-$(RM) "main.obj" 
+	-$(RM) "main.d" "Modules\MOD_DRV__BASICS\settings.d" "Modules\MOD_DRV__TIMERS\timer_a.d" 
+	-$(RM) "main.obj" "Modules\MOD_DRV__BASICS\settings.obj" "Modules\MOD_DRV__TIMERS\timer_a.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
